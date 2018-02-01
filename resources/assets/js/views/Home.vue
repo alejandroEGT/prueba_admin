@@ -21,8 +21,240 @@
         </el-col>
         <el-col :span="24" class="main">
             <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
-                <!--导航菜单-->
-                <el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
+                <el-row>
+                  <el-col :span="24">
+                     <el-menu style="background-color:#FDFEFE;">
+                          <el-dropdown 
+                            style="margin:10px;" size="small"
+                          split-button type="default" @click="handleClick" v-loading="loading">
+                              {{ nameAuth.name}}
+                              <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item v-bind:value="nameAuth.id">{{ nameAuth.name }}</el-dropdown-item>
+                                 <el-dropdown-item v-bind:value="7">{{ 'user 2' }}</el-dropdown-item>
+                                
+                                
+                              </el-dropdown-menu>
+                            </el-dropdown>
+                        
+                        <el-collapse v-model="activeNames" @change="handleChange" style="margin:5px;">
+                            <el-collapse-item title="Proyectos" name="1" >
+                                Proyectos: <el-badge class="mark" :value="3" /> 
+                                
+                                        <el-tooltip class="item" effect="dark" content="Crear un nuevo proyecto" placement="bottom">
+                                            <el-button @click="dialogVisible = true" size="mini" style="margin-left: 35px;" type="primary" icon="fa fa-plus">Nuevo</el-button>
+                                        </el-tooltip>
+                                        <el-dialog
+                                          title="Nuevo proyecto"
+                                          :visible.sync="dialogVisible"
+                                          width="30%"
+                                          :before-close="handleClose">
+                                          
+                                            
+                                            <div style="margin: 20px;"></div>
+
+                                            <el-form :label-position="labelPosition" label-width="100px" :model="formLabelAlign">
+                                                 <el-dropdown 
+                                                    style="margin:10px;" size="small"
+                                                  split-button type="default" @click="handleClick" v-loading="loading">
+                                                      {{ nameAuth.name}}
+                                                      <el-dropdown-menu slot="dropdown">
+                                                        <el-dropdown-item v-bind:value="nameAuth.id">{{ nameAuth.name }}</el-dropdown-item>
+                                                         <el-dropdown-item v-bind:value="7">{{ 'user 2' }}</el-dropdown-item>
+                                                        
+                                                        
+                                                      </el-dropdown-menu>
+                                                    </el-dropdown>
+                                            
+                                              
+                                              <el-form-item label="Nombre">
+                                                <el-input v-model="formLabelAlign.type" style="width:70%" ></el-input>
+                                              </el-form-item>
+                                            </el-form>
+
+
+                                          <span slot="footer" class="dialog-footer">
+                                            <el-button @click="dialogVisible = false">Cancel</el-button>
+                                            <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
+                                          </span>
+                                        </el-dialog>
+
+                                         <el-input
+                                            size="small"
+                                            placeholder="Please Input"
+                                            v-model="input9">
+                                          </el-input>
+                                    <el-tabs v-model="activeName" @tab-click="handleClick" style="
+                                        border-bottom: 1px solid #E5E7E9 ;">
+                                        <el-tab-pane label="Todos" name="first">
+                                            
+                                            <div style="margin-left:5px ;overflow:scroll;height:100px;">
+                                                <li>
+                                                    <router-link :to="{ name: 'Proyecto', params:{ id: '1'}  }">
+
+
+                                                        <el-button icon="fa fa-desktop" type="text" style="color:black" >Proyecto 1</el-button>
+                                                        </router-link>
+                                                </li>
+                                                <li>
+                                                    <router-link :to="{ name: 'Proyecto', params:{ id: '2'}}">
+                                                        <el-button icon="fa fa-desktop" type="text" style="color:black">Proyecto 2</el-button>
+                                                        </router-link>
+                                                </li>
+                                                <li>
+                                                    <router-link :to="{ name: 'Proyecto', params:{ id: '3'}}">
+                                                        <el-button icon="fa fa-desktop" type="text" style="color:black">Proyecto 3</el-button>
+                                                        </router-link>
+                                                </li>
+                                                        
+                                             </div>
+
+                                        </el-tab-pane>
+                                        <el-tab-pane label="Mios" name="second">Config</el-tab-pane>
+                                        
+                                      </el-tabs>
+                                        <br>
+                                      <el-popover
+                                      ref="popover4"
+                                      placement="right"
+                                      width="500"
+
+                                      trigger="click">
+                                     <div>
+                                         <h3>Lista de contactos</h3>
+                                         <el-tabs type="border-card">
+                                              <el-tab-pane>
+                                                <span slot="label"><i class="fa fa-globe"></i> Todos</span>
+
+                                                    <el-row :gutter="10" style="border-bottom: 1px solid #D5D8DC; margin:10px ">
+                                                        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
+                                                            <img class="img-contact" src="http://sm.ign.com/ign_es/screenshot/default/goku-0_19cy.jpg">
+                                                        </el-col>
+                                                        <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11">
+                                                            <label class="lbl-non">Aphix</label><br>
+                                                            <label >Equipo</label>
+                                                        </el-col>      
+                                                    </el-row>
+                                                    <el-row :gutter="10" style="border-bottom: 1px solid #D5D8DC; margin:10px ">
+                                                        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
+                                                            <img class="img-contact" src="https://qph.ec.quoracdn.net/main-qimg-76b1a9a47d43e3792bd1ae5a9b2394d8">
+                                                        </el-col>
+                                                        <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11">
+                                                            <label class="lbl-non">Alejandro godoy</label><br>
+                                                            <label >Usuario</label>
+                                                        </el-col>      
+                                                    </el-row>
+                                             
+                                              </el-tab-pane>
+                                              <el-tab-pane>
+                                                <span slot="label"><i class="fa fa-user"></i> Personas</span>
+                                                <ul>
+                                                    <li>diego</li>
+                                                    <li>danilo</li>
+                                                </ul>
+                                              </el-tab-pane>
+                                              <el-tab-pane>
+                                                <span slot="label"><i class="fa fa-users"></i> Equipo</span>
+                                                <ul>
+                                                    <li>Aphix</li>
+                                                    <li>Exod</li>
+                                                </ul>
+                                              </el-tab-pane>
+                                              
+                                            </el-tabs>
+                                     </div>
+                                    </el-popover>
+
+                                    <el-button v-popover:popover4 class="btn" icon="fa fa-heart-o">
+                                        Contactos (2)
+                                    </el-button>
+                                
+                              </el-collapse-item>
+
+                                <!--dos-->
+                                <!--<el-collapse-item title="Usuarios" name="2" >
+                                            <template slot="title">
+                                              Contactos <i class="header-icon el-icon-information"></i>
+                                            </template>
+                                            <div>
+                                                 <el-input
+                                                    size="small"
+                                                    placeholder="Please Input"
+                                                    v-model="input9">
+                                                  </el-input>
+
+                                                  <el-tabs v-model="activeName2" @tab-click="handleClick" style="
+                                                        border: 1px solid #E5E7E9 ;">
+                                                        <el-tab-pane label="Todos" name="first">
+                                                            
+                                                            <div style="margin-left:5px ;overflow:scroll;height:100px;">
+                                                                <li>
+                                                                    <router-link :to="{ path: '/index'}">
+                                                                        <el-button type="text" style="color:black" @click="dialogVisible = true">Proyecto test</el-button>
+                                                                        </router-link>
+                                                                </li>
+                                                                <li>
+                                                                    <router-link :to="{ path: '/index'}">
+                                                                        <el-button type="text" style="color:black" @click="dialogVisible = true">Proyecto test</el-button>
+                                                                        </router-link>
+                                                                </li>
+                                                                <li>
+                                                                    <router-link :to="{ path: '/index'}">
+                                                                        <el-button type="text" style="color:black" @click="dialogVisible = true">Proyecto test</el-button>
+                                                                        </router-link>
+                                                                </li>
+                                                                        
+                                                             </div>
+
+                                                        </el-tab-pane>
+                                                        <el-tab-pane label="Mios" name="second">Config</el-tab-pane>
+                                                        
+                                                      </el-tabs>
+                                            </div>
+
+                                </el-collapse-item>-->
+
+
+                                <!--tres-->
+                              <el-collapse-item title="Enlaces" name="3" >
+                                      <el-tabs type="border" style="border: 1px solid #E5E7E9 ;">
+                                          <el-tab-pane style="margin-left:30px">
+                                            <span slot="label"><i class="fa fa-bar-chart"></i> Estadisticas</span>
+                                                <div>
+                                                <router-link :to="{ path: '/index'}">
+                                                <el-button icon="fa fa-angle-right" type="text" @click="dialogVisible = true">Enlace 1</el-button>
+                                                </router-link>
+                                                </div>
+                                                <div>
+                                                <router-link :to="{ path: '/index'}">
+                                                <el-button icon="fa fa-angle-right" type="text" @click="dialogVisible = true">Enlace 1</el-button>
+                                                </router-link>
+                                                </div>
+                                                <div>
+                                                <router-link :to="{ path: '/index'}">
+                                                <el-button icon="fa fa-angle-right" type="text" @click="dialogVisible = true">Enlace 1</el-button>
+                                                </router-link>
+                                                </div>
+                                                <div>
+                                                <router-link :to="{ path: '/index'}">
+                                                <el-button icon="fa fa-angle-right" type="text" @click="dialogVisible = true">Enlace 1</el-button>
+                                                </router-link>
+                                                </div>
+                                          </el-tab-pane>
+                                           <el-tab-pane>
+                                            <span slot="label"><i class="el-icon-date"></i> Otros</span>
+                                            Route
+                                          </el-tab-pane>
+                                          
+                                      </el-tabs>
+                                </el-collapse-item>      
+  
+                        </el-collapse>
+                            
+                    </el-menu>
+                    
+                </el-col>
+                </el-row>
+                <!--<el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
                      unique-opened router v-show="!collapsed">
                     <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
                         <el-submenu :index="index+''" v-if="!item.leaf">
@@ -31,8 +263,8 @@
                         </el-submenu>
                         <el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
                     </template>
-                </el-menu>
-                <!--导航菜单-折叠后-->
+                </el-menu>-->
+               
                 <ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
                     <li v-for="(item,index) in $router.options.routes" v-if="!item.hidden" class="el-submenu item">
                         <template v-if="!item.leaf">
@@ -52,7 +284,7 @@
             <section class="content-container">
                 <div class="grid-content bg-purple-light">
                     <el-col :span="24" class="breadcrumb-container">
-                        <strong class="title">{{$route.name}}</strong>
+                        <!--<strong class="title">{{$route.path}}</strong>-->
                         <el-breadcrumb separator="/" class="breadcrumb-inner">
                             <el-breadcrumb-item v-for="item in $route.matched" :key="item.id">
                                 {{ item.name }}
@@ -69,13 +301,45 @@
         </el-col>
     </el-row>
 </template>
-
+<style type="text/css">
+    .btn{
+        width: 180px;
+    }
+    .img-contact{
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+    }
+    .lbl-non{
+        color: #1F618D;
+        text-align: center;
+        vertical-align: middle;
+        /*line-height: -30px; */
+    }
+</style>
 <script>
+    
+    import { getUserAuth } from '../endpoints';
+
     export default {
         data() {
             return {
-                sysName:'Laravel Vue Admin',
+                loading: true,
+                sysName:'Estake',
+                activeName: 'first',
+                activeName2: 'first',
+                 activeNames: ['1','2','3'],
                 collapsed: false,
+                dialogVisible: false,
+                labelPosition:'right',
+
+                formLabelAlign: {
+                  name: '',
+                  region: '',
+                  type: ''
+                },
+                input9:'',
+                nameAuth: '',
                 sysUserName: this.$auth.user().email,
                 sysUserAvatar: this.$auth.user().avatar,
                 form: {
@@ -90,20 +354,45 @@
                 }
             }
         },
+        created(){
+            this.getNameUser();
+             //this.$router.push({name: 'Index'});
+        },
         methods: {
+
+            getNameUser() {
+                getUserAuth().then((response) =>{
+                        console.log(response);
+                        this.nameAuth = response.data;
+                        this.loading = false;
+                }).catch((error) =>{
+                        console.log("mira este error papa!!");
+                });
+            },
+
+            handleChange(){
+
+            } , 
+            handleClick() {
+                console.log('handleopen');
+            },
             onSubmit() {
                 console.log('submit!');
             },
             handleopen() {
                 //console.log('handleopen');
             },
-            handleclose() {
-                //console.log('handleclose');
-            },
+            handleClose(done) {
+                this.$confirm('Seguro que quieres cerrar el formulario?')
+                  .then(_ => {
+                    done();
+                  })
+                  .catch(_ => {});
+              },
             handleselect: function (a, b) {
             },
             logout: function () {
-                this.$confirm('Are you sure you want to exit?', 'Confirmation', {
+                this.$confirm('Seguro que quieres salir ?', 'Confirmation', {
                 }).then(() => {
                     this.$auth.logout({
                         makeRequest: true,
@@ -116,9 +405,11 @@
             },
             showMenu(i,status){
                 this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-'+i)[0].style.display=status?'block':'none';
+
             }
         },
         mounted() {
+
             var user = sessionStorage.getItem('user');
             if (user) {
                 user = JSON.parse(user);
@@ -131,8 +422,10 @@
 
 </script>
 
+
 <style scoped lang="scss">
     $color-primary: #20a0ff;//#18c79c
+
 
     .container {
         position: absolute;
@@ -200,6 +493,8 @@
             bottom: 0px;
             overflow: hidden;
             aside {
+                border : 1px solid #E5E7E9;
+                background-color:withe;
                 flex:0 0 230px;
                 width: 230px;
                 // position: absolute;

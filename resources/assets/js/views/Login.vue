@@ -1,4 +1,5 @@
 <template>
+
   <el-form label-position="left" label-width="0px" class="login-container" @keyup.native.enter="submit">
     <h3 class="title">Login</h3>
     <el-form-item prop="email" :error="errors.get('email')">
@@ -11,11 +12,17 @@
     <el-form-item style="width:100%;">
       <el-button type="primary" style="width:100%;" @click.native.prevent="submit" :loading="isSubmitting" icon="fa fa-sign-in">Login</el-button>
     </el-form-item>
+     <el-form-item style="width:100%;">
+      <el-button type="default" style="width:100%;" @click.native.prevent="register" icon="fa fa-user-plus">Registrar</el-button>
+    </el-form-item>
+
+     <el-button
+   
   </el-form>
 </template>
 
 <script>
-import {requestLogin}  from '../endpoints';
+import {requestLogin, auth}  from '../endpoints';
 import Errors from '../common/js/Errors';
 
 export default {
@@ -30,8 +37,10 @@ export default {
       checked: true
     };
   },
+  
   methods: {
     submit() {
+
       this.isSubmitting = true;
 
       this.$auth.login({
@@ -42,11 +51,26 @@ export default {
           this.$router.push({ path: '/users' });
         },
         error(error) {
-      		this.errors.record(error.response.data);
+          this.errors.record(error.response.data);
           this.isSubmitting = false;
+          this.open6('error', 'Error de autentificación');
         }
       });
-    }
+    },
+
+    register() {
+        this.$router.push({ path: 'Register' })
+    },
+    open6(error, mensaje) {
+        this.$notify.error({
+          title: error,
+          message: mensaje
+        });
+      }
+  },
+  mounted(){
+      
+      
   }
 }
 

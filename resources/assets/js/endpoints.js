@@ -12,3 +12,9 @@ export const removeUser = params => { return axios.delete(`${base}/users/${param
 
 export const editUser = params => { return axios.put(`${base}/users/${params.id}`, params); };
 
+export const saludo = params => { return axios.post(`saludo`, params).then(res => res.data); };
+
+export const getUserAuth = params => { return axios.get(`${base}/getUserAuth`);};
+
+
+//export const auth = params => { return axios.get(`${base}/getUser`, params) };

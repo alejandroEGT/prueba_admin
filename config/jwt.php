@@ -20,8 +20,9 @@ return [
     | A helper command is provided for this: `php artisan jwt:generate`
     |
     */
+    
 
-    'secret' => env('JWT_SECRET', 'arstarst'),
+    'secret' => env('JWT_SECRET', 'mHjTrzSsH4ZAZh8LJX02dBZNg69cohBz'),
 
     /*
     |--------------------------------------------------------------------------

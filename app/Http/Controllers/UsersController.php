@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use App\Filters\UserFilter;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,21 +18,23 @@ class UsersController extends Controller
 
     public function store()
     {
+
         $this->validate(request(), [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed|min:4',
+            'password' => 'required|min:4',
+            'confirma' => 'required|min:4|same:password',
             'sex' => 'required',
             'age' => 'required|integer|min:1',
             'birth' => 'required|date',
             'address' => 'required',
         ]);
 
-        User::create(request()->all());
+        $insert = User::create(request()->all());
+        //$insert = User::crear(request());
 
-        return response()->json([
-            'message' => 'Successful created'
-        ]);
+        return $insert;
+
     }
 
     public function update(User $user)
@@ -59,5 +62,9 @@ class UsersController extends Controller
         return response()->json([
             'message' => 'The user has been successfully deleted'
         ], Response::HTTP_ACCEPTED);
+    }
+    public function getUserAuth(){
+
+        return response()->json(Auth::user());
     }
 }

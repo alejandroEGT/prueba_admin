@@ -1,6 +1,6 @@
-<template>
+<!--<template>
 	<section>
-        <!-- filters -->
+         filters 
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
 			<el-form :inline="true" :model="filters">
 				<el-form-item>
@@ -15,7 +15,7 @@
 			</el-form>
 		</el-col>
 
-		<!-- table -->
+		 table 
 		<el-table :data="users" highlight-current-row v-loading="listLoading" element-loading-text="Loading ..." @sort-change="handleSortChange" @filter-change="handleFilterChange" style="width: 100%;">
 			<el-table-column prop="id" width="60" sortable=false> </el-table-column>
             <el-table-column prop="name" label="Name" width="220" sortable=false> </el-table-column>
@@ -36,13 +36,13 @@
 			</el-table-column>
 		</el-table>
 
-		<!-- pagination -->
+		pagination 
 		<el-col :span="24" class="toolbar">
 			<el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
 			</el-pagination>
 		</el-col>
 
-		<!-- add dialog -->
+		 add dialog
 		<el-dialog title="New user" v-model="addFormVisible" :close-on-click-modal="false">
 			<el-form :model="addForm" label-width="80px" ref="addForm">
 				<el-form-item label="Name" prop="name" :error="errors.get('name')">
@@ -83,7 +83,7 @@
 			</div>
 		</el-dialog>
 
-		<!-- edit dialog -->
+		 edit dialog 
         <el-dialog title="Edit user" v-model="editFormVisible" :close-on-click-modal="false">
 			<el-form :model="editForm" label-width="80px" ref="editForm">
 				<el-form-item label="Name" prop="name" :error="errors.get('name')">
@@ -258,3 +258,4 @@
 
 <style scoped>
 </style>
+-->
