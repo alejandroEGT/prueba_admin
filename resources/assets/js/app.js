@@ -80,7 +80,7 @@ Vue.use(VueAuth, {
 var component = require('./views/App.vue');
 component.router = Vue.router;
 
-var App = new Vue({
+/*var App = new Vue({
     el:'#app',
     mounted(){
         
@@ -94,7 +94,7 @@ var App = new Vue({
 
     }
 
-});
+});*/
 
 
 new Vue(component).$mount('#app');

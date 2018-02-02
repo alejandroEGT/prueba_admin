@@ -48,10 +48,8 @@
 
   <el-menu class="mi-nav"  :router="true"  mode="horizontal" >
         <template v-for="rule in rutaMenu_items">
-            <el-menu-item  :index="'/panel/proyecto/'+$route.params.id +'/'+rule.name" >{{ rule.name }}</el-menu-item>
+            <el-menu-item class="first-letter"  :index="'/panel/proyecto/'+$route.params.id +'/'+rule.name" >{{ rule.name  }}</el-menu-item>
         </template>
-
-        
 </el-menu>
 
 
@@ -89,6 +87,9 @@ export default {
   .mi-nav{
     background: white;
   }
+  .first-letter {
+    text-transform:capitalize;
+}
 </style>
 
 

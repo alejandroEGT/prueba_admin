@@ -12,6 +12,8 @@ import Minutas from './views/Minutas.vue'
 import Requerimientos from './views/Requerimientos.vue'
 import Encuestas from './views/Encuestas.vue'
 import event from './views/event.vue'
+import Wiki from './views/Wiki.vue'
+import Notificaciones from './views/Notificaciones.vue'
 
 let routes = [
    
@@ -72,12 +74,25 @@ let routes = [
                           component: Requerimientos,
                           
                     },
-                     {
+                    {
                           path: '/panel/proyecto/:id/encuestas',
                           name: 'encuestas',
                           component: Encuestas,
                           
+                    },
+                    {
+                          path: '/panel/proyecto/:id/wiki',
+                          name: 'wiki',
+                          component: Wiki,
+                          
                     }
+                    ,
+                    {
+                          path: '/panel/proyecto/:id/notificaciones',
+                          name: 'notificaciones',
+                          component: Notificaciones,
+                    },
+                      
                 ]
             },
         ]

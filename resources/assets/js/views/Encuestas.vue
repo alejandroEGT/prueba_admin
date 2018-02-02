@@ -20,10 +20,10 @@
 								<el-button icon="fas fa-check" type="text">0 Abiertos</el-button>
 								<el-button icon="fas fas fa-times" type="text">0 Cerrados</el-button>
 							</el-col>
-							<el-col :span="4" :md="7" :xs="6" :sm="6"  :offset="2">
+							<el-col :span="3" :md="7" :xs="6" :sm="6"  :offset="3">
 
 								
-								<el-button class="slt" @click="see=true" type="primary" icon="fas fa-plus">Agregar</el-button>
+								<el-button class="slt" @click="see=true, seeTable=false" type="primary" icon="fas fa-plus">Agregar</el-button>
 
 							</el-col>
 						</el-row>
@@ -31,6 +31,33 @@
 				</div>
 			</el-col>
 		</el-row>
+
+			<div v-if="seeTable" class="salto" >
+			<template >
+			  <el-table
+			    
+			    style="width: 100%">
+			    <el-table-column
+			      type="index"
+			      >
+			    </el-table-column>
+			    <el-table-column
+			      prop="date"
+			      label="Fecha"
+			      width="180">
+			    </el-table-column>
+			    <el-table-column
+			      prop="name"
+			      label="Nombre"
+			      width="180">
+			    </el-table-column>
+			    <el-table-column
+			      prop="address"
+			      label="Dirección">
+			    </el-table-column>
+			  </el-table>
+			</template>
+		</div>
 	
 
 			<div v-if="see">
@@ -69,7 +96,7 @@
 							  <el-button type="text" @click="addDomain">Agregar otra opción</el-button>
 								
 								<br>
-							   <el-button @click="see=false" >Cerrar</el-button>
+							   <el-button @click="see=false, seeTable=true" >Cerrar</el-button>
   							   <el-button type="primary">Crear</el-button>
  
 						</el-form>
@@ -84,6 +111,7 @@
 	export default{
 		data(){
 			return{
+				seeTable:true,
 				preg:0,
 				input:'',
 				input7:'',
@@ -113,3 +141,9 @@
 		}
 	}
 </script>
+
+<style type="text/css">
+	.salto{
+		margin-top:10px;
+	}
+</style>

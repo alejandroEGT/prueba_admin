@@ -36,7 +36,7 @@
 								</el-popover>
 
 								<el-button v-popover:popover5 class="slt" type="primary" icon="far fa-share">Compartir</el-button>
-								<el-button class="slt" @click="seeAdd=true" type="primary" icon="fas fa-plus">Agregar</el-button>
+								<el-button class="slt" @click="action" type="primary" icon="fas fa-plus">Agregar</el-button>
 
 							</el-col>
 						</el-row>
@@ -44,6 +44,33 @@
 				</div>
 			</el-col>
 		</el-row>
+
+		<div v-if="seeTable" class="salto" >
+			<template >
+			  <el-table
+			    
+			    style="width: 100%">
+			    <el-table-column
+			      type="index"
+			      >
+			    </el-table-column>
+			    <el-table-column
+			      prop="date"
+			      label="Fecha"
+			      width="180">
+			    </el-table-column>
+			    <el-table-column
+			      prop="name"
+			      label="Nombre"
+			      width="180">
+			    </el-table-column>
+			    <el-table-column
+			      prop="address"
+			      label="Dirección">
+			    </el-table-column>
+			  </el-table>
+			</template>
+		</div>
 
 		<div v-if="seeAdd">
 
@@ -61,12 +88,33 @@
 						</el-form-item>
 		 			 <markdown-editor v-model="content" ref="markdownEditor"></markdown-editor>
 
-		 			 	<el-button @click="seeAdd=false" >Cerrar</el-button>
+		 			 	<el-button @click="seeAdd=false, seeTable=true" >Cerrar</el-button>
 		  				<el-button type="primary">Crear</el-button>
 					</el-form>
 				</el-col>
-				<el-col :span="5" >
-					<h3>Agregar requerimiento</h3>
+				<el-col :span="5" :offset="2" >
+
+					    <el-popover
+						  ref="popover2"
+						  placement="bottom"
+						  title="Asignar personas"
+						  width="200"
+						  trigger="click"
+						  content="this is content, this is content, this is content">
+
+							 <el-autocomplete
+						      class="inline-input"
+						    
+						      v-model="state1"
+						      :fetch-suggestions="querySearch"
+						      placeholder="Ingrese el nombre o er"
+						      @select="handleSelect">
+						      	
+						      </el-autocomplete>
+
+						</el-popover>
+
+					<el-button type="text" v-popover:popover2 icon="fas fa-cog" >Asignación </el-button>
 				</el-col>
 			</el-row>
 			 
@@ -91,9 +139,12 @@ import markdownEditor from 'vue-simplemde/src/markdown-editor'
 
     data() {
       return {
+      	seeTable: true,
       	seeAdd: false,
+      	links: [],
+        state1: '',
       	input7:'',
-      	 content: '',
+      	content: '',
       	input8:'https://www.ejemplo.com/12jnjk312h3byudqwjkndqw" ',
       	input9:'',
         visible2: false,
@@ -101,7 +152,34 @@ import markdownEditor from 'vue-simplemde/src/markdown-editor'
     },
     components: {
 	    markdownEditor
-	  }	
+	},
+	methods:{
+		querySearch(queryString, cb) {
+        var links = this.links;
+        var results = queryString ? links.filter(this.createFilter(queryString)) : links;
+        // call callback function to return suggestions
+        cb(results);
+      }
+      ,
+      loadAll() {
+        return [
+          { "value": "vue", "link": "https://github.com/vuejs/vue" },
+          { "value": "element", "link": "https://github.com/ElemeFE/element" },
+          { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
+          { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
+          { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
+          { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
+          { "value": "babel", "link": "https://github.com/babel/babel" }
+         ];
+      },
+      handleSelect(item) {
+        console.log(item);
+      },
+      action(){
+      	this.seeAdd=true, 
+      	this.seeTable=false
+      }
+	}
   }
 </script>
 
@@ -114,5 +192,7 @@ import markdownEditor from 'vue-simplemde/src/markdown-editor'
 	.slt{
 		margin: 2px;
 	}
-
+	.salto{
+		margin-top: 10px;
+	}
 </style>
