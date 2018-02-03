@@ -3,7 +3,7 @@
 	<div>
 		
 		<div class="box-chat" >
-			<div class="chat-body" >
+			<div class="chat-body" v-chat-scroll >
 				<!--<section class="module">
           <ol class="discussion">
             <li class="other">
@@ -80,46 +80,17 @@
           </ol>
           
         </section>-->
-      
-        <ul class="chat">
-          <li class="left clearfix" v-for="message in messages">
-              <div class="chat-body clearfix">
-                  <div class="header">
-                      <strong class="primary-font">
-                          {{ message.user.name }}
-                      </strong>
-                  </div>
-                  <p>
-                      {{ message.message }}
-                  </p>
-              </div>
-          </li>
-      </ul>
 
-         
+         <chat-messages :messages="messages"></chat-messages>
+         <hr>
 			</div>
+    
+     <div class="chat-foot">           
+         <chat-form v-on:messagesent="addMessage" :user="nameAuth"></chat-form>
+      </div>
 
-			<div class="chat-foot" >
-
-				<el-row>
-				  <el-col :span="15">
-				  		<el-input placeholder="Nuevo mensaje" ></el-input>
-				  </el-col>
-				  <el-col :span="2">
-				  		<!--<el-button type="primary" icon="fa fa-paper-plane-o"  round>Enviar</el-button>-->
-              <div class="input-group">
-                  <input id="btn-input" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." v-model="newMessage" @keyup.enter="sendMessage">
-
-                  <span class="input-group-btn">
-                      <button class="btn btn-primary btn-sm" id="btn-chat" @click="sendMessage">
-                          Send
-                      </button>
-                  </span>
-              </div>
-            
-				  </el-col>
-				</el-row>	
-			</div>
+				
+	
 		</div>
 
 	</div>
@@ -130,12 +101,11 @@
   
    import { getUserAuth } from '../endpoints';
   export default{
-    props: ['messages'],
-    props: ['user'],
+   
     data(){
       return{
           nameAuth: '',
-          messages:'',
+          messages:[],
           newMessage: '',
       }
     },
@@ -143,6 +113,13 @@
       this.getNameUser();
       this.fetchMessages();
 
+      window.Echo.private('chat')
+        .listen('MessageSent', (e) => {
+          this.messages.push({
+            message: e.message.message,
+            user: e.user
+          });
+        });
      
     },
     methods:{
@@ -166,6 +143,7 @@
         fetchMessages() {
             axios.get('frontend/messages').then(response => {
                 this.messages = response.data;
+                console.log(response.data);
             });
         },
 
@@ -208,143 +186,3 @@
 
 </style>
 
-<style scoped lang="scss" >
-	
-
-@import url(http://weloveiconfonts.com/api/?family=typicons);
-[class*="typicons-"]:before {
-  font-family: 'Typicons', sans-serif;
-}
-
-.module {
-  height: 500px;
-  width: 100%;
-  
-}
-
-.top-bar {
-  background: #666;
-  color: white;
-  padding: 0.5rem;
-  position: relative;
-  overflow: hidden;
-  h1 {
-    display: inline;
-    font-size: 1.1rem;
-  }
-  .typicons-message {
-    display: inline-block;
-    padding: 4px 5px 2px 5px;
-  }
-  .typicons-minus {
-    position: relative;
-    top: 3px;
-  }
-  .left {
-    float: left;
-  }
-  .right {
-    float: right;
-    padding-top: 5px;
-  }
-  > * {
-    position: relative; 
-  }
-  &::before {
-    content: "";
-    position: absolute;
-    top: -100%;
-    left: 0;
-    right: 0;
-    bottom: -100%;
-    opacity: 0.25;
-    background: radial-gradient(white, black);
-    animation: pulse 1s ease alternate infinite;
-  }
-}
-
-.discussion {
-  list-style: none;
-  /*background: #e5e5e5;*/
-  margin: 0;
-  padding: 0 0 50px 0; // finality
-  li {
-    padding: 0.5rem;
-    overflow: hidden;
-    display: flex;
-  }
-  .avatar {
-    width: 40px; // stronger than %
-    // could set height, but gonna bottom-align instead
-    position: relative; // for triangle
-    img {
-      display: block; // triangle position
-      width: 100%;
-      border-radius:40%;
-    }
-  }
-}
-
-.other {
-  .avatar {
-    &:after {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 0;
-      height: 0;
-      border: 5px solid #00A2F8;
-      border-left-color: transparent;
-      border-bottom-color: transparent;
-    }
-  }
-}
-
-.self {
-  justify-content: flex-end;
-  align-items: flex-end;
-  .messages {
-    order: 1;
-    border-bottom-right-radius: 0; // weird shadow fix
-  }
-  .avatar {
-    order: 2;
-    &:after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 0;
-      border: 5px solid #00A2F8;
-      border-right-color: transparent;
-      border-top-color: transparent;
-      box-shadow: 1px 1px 2px rgba(black, 0.2); // not quite perfect but close
-    }
-  }
-}
-
-.messages {
-  
-  width:300px;
-  color:white;
-  background: #00A2F8;
-  padding: 10px;
-  border-radius: 1px;
-  box-shadow: 0 1px 2px rgba(black, 0.2);
-  p {
-    font-size: 0.9rem;
-    margin: 0 0 0.2rem 0;
-  }
-  time {
-    font-size: 0.7rem;
-    color: #34495E;
-  }
-}
-
-@keyframes pulse {
-  from { opacity: 0; }
-  to { opacity: 0.5; }
-}
-</style>

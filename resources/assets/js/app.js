@@ -35,6 +35,9 @@ import 'element-ui/lib/theme-default/index.css'
 import './assets/icon.css'
 import { TrixVue } from 'trix-vue2'
 import VueSimplemde from 'vue-simplemde'
+
+import VueChatScroll from 'vue-chat-scroll'
+Vue.use(VueChatScroll)
 locale.use(lang)
 
 // app components
@@ -45,6 +48,8 @@ Vue.use(VueSimplemde)
 
 // disable message
 Vue.config.productionTip = false
+Vue.component('chat-messages', require('./views/ChatMessages.vue'));
+Vue.component('chat-form', require('./views/ChatForm.vue'));
 
 // routes
 import routes from './routes'
@@ -61,6 +66,7 @@ Vue.router = new VueRouter({ routes: routes});
       key: '8f7416536e2111def304',
       cluster : 'eu',
       encrypted :true,
+       authEndpoint: '/broadcasting/auth'
   });
 /**fin**/
 
@@ -80,32 +86,11 @@ Vue.use(VueAuth, {
 var component = require('./views/App.vue');
 component.router = Vue.router;
 
-/*var App = new Vue({
-    el:'#app',
-    mounted(){
-        
-        window.Echo.private('chat')
-      .listen('MessageSent', (e) => {
-        this.messages.push({
-          message: e.message.message,
-          user: e.user
-        });
-      });
 
-    }
-
-});*/
 
 
 new Vue(component).$mount('#app');
 
-/*window.Echo.private('chat')
-      .listen('MessageSent', (e) => {
-        this.messages.push({
-          message: e.message.message,
-          user: e.user
-        });
-      });
-      */
+
 
 //https://blog.pusher.com/how-to-build-a-laravel-chat-app-with-pusher/

@@ -44,11 +44,7 @@ return [
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
-        ],
-         'channel' => [
-            'driver' => 'token',
-            'provider' => 'users',
-        ],
+        ]
 
     ],
 

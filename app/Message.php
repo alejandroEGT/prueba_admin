@@ -8,11 +8,11 @@ use App\Events\MessageSent;
 class Message extends Model
 {
 
-	protected $dispatchesEvent= [
+	/*protected $dispatchesEvent= [
 		'created' => MessageSent::class,
-	];
+	];*/
 
-    protected $fillable = ['message', 'user_id'];
+    protected $fillable = ['message'/*, 'user_id'*/];
 
 
 	public function user()

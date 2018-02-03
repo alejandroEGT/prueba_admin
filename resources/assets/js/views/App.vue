@@ -7,24 +7,6 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: 'app',
-	components: {
-	},
-	mounted(){
-
-		window.Echo.private('chat')
-	      .listen('MessageSent', (e) => {
-	        this.messages.push({
-	          message: e.message.message,
-	          user: e.user
-	        });
-	      });
-	}
-}
-
-</script>
 
 <style lang="scss">
 body {
