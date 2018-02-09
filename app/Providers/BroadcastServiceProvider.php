@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Broadcasting\PrivateChannel;
 
 class BroadcastServiceProvider extends ServiceProvider
 {
@@ -16,6 +17,17 @@ class BroadcastServiceProvider extends ServiceProvider
     {
         Broadcast::routes();
 
-        require base_path('routes/channels.php');
+
+        Broadcast::channel('App.User.{id}', function ($user, $id) {
+           
+            return true;
+
+        });
+
+        Broadcast::channel('chat', function ($user) {
+      
+            return true;
+        });
+        //require base_path('routes/channels.php');
     }
 }

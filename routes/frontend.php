@@ -18,6 +18,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 
     Route::get('messages', 'chatController@fetchMessages');
 	Route::post('messages', 'chatController@sendMessage');
+	Route::resource('proyecto', 'proyectoController');
 
 });
 

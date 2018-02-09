@@ -7,7 +7,7 @@ Route::get('/', function () {
 });
 Route::get('/event', function(){
 
-	return event( new MessageSent("hola po jano"));
+	return event( new MessageSent("hola mundo"));
 });
 
 Route::resource('saludo','HomeController');

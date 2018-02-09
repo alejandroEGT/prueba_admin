@@ -7,7 +7,7 @@
         <span class="el-icon-fa fa-desktop fa-x" ></span>
     </el-col>
     <el-col :span="10">
-        <label>Proyecto {{$route.params.id}}</label>
+        <label>{{ proyecto.nombre }}</label>
     </el-col>
   </el-row>
 
@@ -61,21 +61,33 @@
       <router-view></router-view>
   </div>
 </template>
+
 <script>
+  import { getProyecto} from '../endpoints';
 export default {
     data() {
       return {
-       
+        proyecto:{},
       };
     },
 
 
     created() {    
       this.rutaMenu_items = this.$router.options.routes[3].children[2].children;
+      this.get_proyecto();
       //console.log(this.$router.options);
     },
     methods: {
 
+      get_proyecto(){
+
+          getProyecto(this.$route.params.id).then((response)=>{
+              this.proyecto = response.data;
+              console.log(response.data);
+          }).catch((error)=>{
+
+          });
+      },
     
     }
   };

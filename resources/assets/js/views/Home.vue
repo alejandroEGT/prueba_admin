@@ -1,4 +1,5 @@
 <template>
+
     <el-row class="container">
         <el-col :span="24" class="header">
             <el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
@@ -52,30 +53,30 @@
                                             
                                             <div style="margin: 20px;"></div>
 
-                                            <el-form :label-position="labelPosition" label-width="100px" :model="formLabelAlign">
-                                                 <el-dropdown 
-                                                    style="margin:10px;" size="small"
-                                                  split-button type="default" @click="handleClick" v-loading="loading">
-                                                      {{ nameAuth.name}}
-                                                      <el-dropdown-menu slot="dropdown">
-                                                        <el-dropdown-item v-bind:value="nameAuth.id">{{ nameAuth.name }}</el-dropdown-item>
-                                                         <el-dropdown-item v-bind:value="7">{{ 'user 2' }}</el-dropdown-item>
-                                                        
-                                                        
-                                                      </el-dropdown-menu>
-                                                    </el-dropdown>
+                                            <el-form :label-position="labelPosition" label-width="100px" :model="proyecto">
+                                                
+
+                                                    <el-select v-model="proyecto.id_user" placeholder="Select">
+                                                      <el-option
+                                                        :key="nameAuth.id"
+                                                        :label="nameAuth.name"
+                                                        :value="nameAuth.id">
+                                                      </el-option>
+                                                    </el-select>
                                             
                                               
                                               <el-form-item label="Nombre">
-                                                <el-input v-model="formLabelAlign.type" style="width:70%" ></el-input>
+                                                <el-input v-model="proyecto.nombre" style="width:70%" ></el-input>
                                               </el-form-item>
+
+                                              <el-button @click="dialogVisible = false">Cancel</el-button>
+                                            <el-button type="primary" @click.submit="submitProyecto">Confirm</el-button>
+
+
                                             </el-form>
 
 
-                                          <span slot="footer" class="dialog-footer">
-                                            <el-button @click="dialogVisible = false">Cancel</el-button>
-                                            <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
-                                          </span>
+                                        
                                         </el-dialog>
 
                                          <el-input
@@ -87,26 +88,16 @@
                                         border-bottom: 1px solid #E5E7E9 ;">
                                         <el-tab-pane label="Todos" name="first">
                                             
-                                            <div style="margin-left:5px ;overflow:scroll;height:100px;">
-                                                <li>
-                                                    <router-link :to="{ name: 'Proyecto', params:{ id: '1'}  }">
-
-
-                                                        <el-button icon="fa fa-desktop" type="text" style="color:black" >Proyecto 1</el-button>
-                                                        </router-link>
-                                                </li>
-                                                <li>
-                                                    <router-link :to="{ name: 'Proyecto', params:{ id: '2'}}">
-                                                        <el-button icon="fa fa-desktop" type="text" style="color:black">Proyecto 2</el-button>
-                                                        </router-link>
-                                                </li>
-                                                <li>
-                                                    <router-link :to="{ name: 'Proyecto', params:{ id: '3'}}">
-                                                        <el-button icon="fa fa-desktop" type="text" style="color:black">Proyecto 3</el-button>
-                                                        </router-link>
+                                            <div  style="margin-left:5px ;overflow:scroll;height:100px;">
+                                                <li v-for="list in list_proyecto">
+                                                    <!--<router-link :to="{ name: 'Proyecto', params:{ id: list.id}  }" append>-->
+                                                    <a :href="'/#/panel/proyecto/' + list.id +'/'" >
+                                                        <el-button icon="fa fa-desktop" type="text" style="color:black" >{{ list.nombre }}</el-button>
+                                                    </a>    
+                                                        <!--</router-link>-->
                                                 </li>
                                                         
-                                             </div>
+                                            </div>
 
                                         </el-tab-pane>
                                         <el-tab-pane label="Mios" name="second">Config</el-tab-pane>
@@ -117,12 +108,12 @@
                                       ref="popover4"
                                       placement="right"
                                       width="500"
-
+                                      
                                       trigger="click">
-                                     <div>
+                                     <div >
                                          <h3>Lista de contactos</h3>
                                          <el-tabs type="border-card">
-                                              <el-tab-pane>
+                                              <el-tab-pane style=" height:400px; width:200; overflow: auto;">
                                                 <span slot="label"><i class="fa fa-globe"></i> Todos</span>
 
                                                     <el-row :gutter="10" style="border-bottom: 1px solid #D5D8DC; margin:10px ">
@@ -139,10 +130,20 @@
                                                             <img class="img-contact" src="https://qph.ec.quoracdn.net/main-qimg-76b1a9a47d43e3792bd1ae5a9b2394d8">
                                                         </el-col>
                                                         <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11">
-                                                            <label class="lbl-non">Alejandro godoy</label><br>
-                                                            <label >Usuario</label>
+                                                            <router-link style="text-decoration:none;"  :to="{ name: 'Persona', params: { id: 123 }}" ><label class="lbl-non">Alejandro godoy</label><br>
+                                                            <label >Usuario</label></router-link>
                                                         </el-col>      
                                                     </el-row>
+                                                     <el-row :gutter="10" style="border-bottom: 1px solid #D5D8DC; margin:10px ">
+                                                        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
+                                                            <img class="img-contact" src="http://sm.ign.com/ign_es/screenshot/default/goku-0_19cy.jpg">
+                                                        </el-col>
+                                                        <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11">
+                                                            <label class="lbl-non">Aphix</label><br>
+                                                            <label >Equipo</label>
+                                                        </el-col>      
+                                                    </el-row>
+                                                   
                                              
                                               </el-tab-pane>
                                               <el-tab-pane>
@@ -170,51 +171,6 @@
                                 
                               </el-collapse-item>
 
-                                <!--dos-->
-                                <!--<el-collapse-item title="Usuarios" name="2" >
-                                            <template slot="title">
-                                              Contactos <i class="header-icon el-icon-information"></i>
-                                            </template>
-                                            <div>
-                                                 <el-input
-                                                    size="small"
-                                                    placeholder="Please Input"
-                                                    v-model="input9">
-                                                  </el-input>
-
-                                                  <el-tabs v-model="activeName2" @tab-click="handleClick" style="
-                                                        border: 1px solid #E5E7E9 ;">
-                                                        <el-tab-pane label="Todos" name="first">
-                                                            
-                                                            <div style="margin-left:5px ;overflow:scroll;height:100px;">
-                                                                <li>
-                                                                    <router-link :to="{ path: '/index'}">
-                                                                        <el-button type="text" style="color:black" @click="dialogVisible = true">Proyecto test</el-button>
-                                                                        </router-link>
-                                                                </li>
-                                                                <li>
-                                                                    <router-link :to="{ path: '/index'}">
-                                                                        <el-button type="text" style="color:black" @click="dialogVisible = true">Proyecto test</el-button>
-                                                                        </router-link>
-                                                                </li>
-                                                                <li>
-                                                                    <router-link :to="{ path: '/index'}">
-                                                                        <el-button type="text" style="color:black" @click="dialogVisible = true">Proyecto test</el-button>
-                                                                        </router-link>
-                                                                </li>
-                                                                        
-                                                             </div>
-
-                                                        </el-tab-pane>
-                                                        <el-tab-pane label="Mios" name="second">Config</el-tab-pane>
-                                                        
-                                                      </el-tabs>
-                                            </div>
-
-                                </el-collapse-item>-->
-
-
-                                <!--tres-->
                               <el-collapse-item title="Enlaces" name="3" >
                                       <el-tabs type="border" style="border: 1px solid #E5E7E9 ;">
                                           <el-tab-pane style="margin-left:30px">
@@ -254,16 +210,7 @@
                     
                 </el-col>
                 </el-row>
-                <!--<el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
-                     unique-opened router v-show="!collapsed">
-                    <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
-                        <el-submenu :index="index+''" v-if="!item.leaf">
-                            <template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
-                            <el-menu-item v-for="child in item.children" :index="child.path" v-if="!child.hidden" :key="child.id">{{child.name}}</el-menu-item>
-                        </el-submenu>
-                        <el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
-                    </template>
-                </el-menu>-->
+    
                
                 <ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
                     <li v-for="(item,index) in $router.options.routes" v-if="!item.hidden" class="el-submenu item">
@@ -293,7 +240,7 @@
                     </el-col>
                     <el-col :span="24" class="content-wrapper">
                         <transition name="fade" mode="out-in">
-                            <router-view></router-view>
+                            <router-view :key="$route.path"></router-view>
                         </transition>
                     </el-col>
                 </div>
@@ -319,7 +266,7 @@
 </style>
 <script>
     
-    import { getUserAuth } from '../endpoints';
+    import { getUserAuth, submitProyecto, listarproyecto } from '../endpoints';
 
     export default {
         data() {
@@ -328,16 +275,12 @@
                 sysName:'Estake',
                 activeName: 'first',
                 activeName2: 'first',
-                 activeNames: ['1','2','3'],
+                activeNames: ['1','2','3'],
                 collapsed: false,
                 dialogVisible: false,
                 labelPosition:'right',
 
-                formLabelAlign: {
-                  name: '',
-                  region: '',
-                  type: ''
-                },
+                proyecto: {},
                 input9:'',
                 nameAuth: '',
                 sysUserName: this.$auth.user().email,
@@ -351,11 +294,13 @@
                     type: [],
                     resource: '',
                     desc: ''
-                }
+                },
+                list_proyecto:{}
             }
         },
         created(){
             this.getNameUser();
+            this.getLista();
              //this.$router.push({name: 'Index'});
         },
         methods: {
@@ -366,8 +311,17 @@
                         this.nameAuth = response.data;
                         this.loading = false;
                 }).catch((error) =>{
-                        console.log("mira este error papa!!");
+                        console.log("error");
                 });
+            },
+            getLista(){
+               listarproyecto().then((response)=>{
+                  this.list_proyecto = response.data;
+                  console.log(response.data);
+               }).catch((error)=>{
+                  this.list_proyecto = "nada para listar";
+                  console.log("sin datos");
+               });
             },
 
             handleChange(){
@@ -376,8 +330,20 @@
             handleClick() {
                 console.log('handleopen');
             },
-            onSubmit() {
-                console.log('submit!');
+            submitProyecto() {
+               // console.log(this.proyecto);/*lorem  djasldjas*/
+                submitProyecto(this.proyecto).then((response)=>{
+                   
+                    this.$message({
+                      message: response.data.succsess,
+                      type: 'success'
+                    });
+                    this.proyecto = {};
+                    this.getLista();
+
+                }).catch((error)=>{
+                   this.$message.error('Error, proyecto no creado');
+                });
             },
             handleopen() {
                 //console.log('handleopen');

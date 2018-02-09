@@ -14,6 +14,8 @@ import Encuestas from './views/Encuestas.vue'
 import event from './views/event.vue'
 import Wiki from './views/Wiki.vue'
 import Notificaciones from './views/Notificaciones.vue'
+import Persona from './views/personas/persona.vue'
+import Chat from './views/personas/chat.vue'
 
 let routes = [
    
@@ -49,39 +51,39 @@ let routes = [
         children: [
             { path: '/users', component: Users, name: 'Users' },
             { path: '/index', component: Index, name: 'Index' },
-            { path: '/panel/proyecto/:id', redirect: { name:'chat' }, component: Proyecto, name: 'Proyecto',
+            { path: '/panel/proyecto/:id/', redirect: {name:'chat'}, component: Proyecto, name: 'Proyecto',
                 children:[
                     {
-                          path: '/panel/proyecto/:id/chat',
+                          path: 'chat',
                           name: 'chat',
                           component: DefaultView
                     },
                     {
-                          path: '/panel/proyecto/:id/repositorio',
+                          path: 'repositorio',
                           name: 'repositorio',
                           component: Repositorio,
                           
                     },
                     {
-                          path: '/panel/proyecto/:id/minutas',
+                          path: 'minutas',
                           name: 'minutas',
                           component: Minutas,
                           
                     },
                      {
-                          path: '/panel/proyecto/:id/requerimientos',
+                          path: 'requerimientos',
                           name: 'requerimientos',
                           component: Requerimientos,
                           
                     },
                     {
-                          path: '/panel/proyecto/:id/encuestas',
+                          path: 'encuestas',
                           name: 'encuestas',
                           component: Encuestas,
                           
                     },
                     {
-                          path: '/panel/proyecto/:id/wiki',
+                          path: 'wiki',
                           name: 'wiki',
                           component: Wiki,
                           
@@ -95,6 +97,16 @@ let routes = [
                       
                 ]
             },
+            {
+              path: '/panel/persona/:id/', redirect:{ name:'chat-people' }, component: Persona, name:'Persona',
+                children:[
+                  {
+                      path: 'chat',
+                      name: 'chat-people',
+                      component: Chat
+                  }
+                ]
+            }
         ]
     },
      {
@@ -116,5 +128,6 @@ let routes = [
         redirect: { path: '/404' }
     }
 ];
+
 
 export default routes;

@@ -81,7 +81,7 @@
           
         </section>-->
 
-         <chat-messages :messages="messages"></chat-messages>
+         <chat-messages :messages="messages"></chat-messages >
          <hr>
 			</div>
     
@@ -113,8 +113,11 @@
       this.getNameUser();
       this.fetchMessages();
 
-      window.Echo.private('chat')
-        .listen('MessageSent', (e) => {
+      Echo.private('chat').listen('MessageSent', (e) => {
+
+         // alert("a llegado alerta de chat");
+         var audio = new Audio('http://soundbible.com/mp3/Elevator Ding-SoundBible.com-685385892.mp3');
+        audio.play();
           this.messages.push({
             message: e.message.message,
             user: e.user

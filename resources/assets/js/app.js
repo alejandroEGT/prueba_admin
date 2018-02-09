@@ -60,14 +60,17 @@ Vue.router = new VueRouter({ routes: routes});
   import Echo from "laravel-echo"
 
   window.Pusher = require('pusher-js');
+  //window.io = require('socket.io-client');
 
   window.Echo = new Echo({
       broadcaster: 'pusher',
       key: '8f7416536e2111def304',
       cluster : 'eu',
       encrypted :true,
-       authEndpoint: '/broadcasting/auth'
+       //authEndpoint: '/broadcasting/auth',
+       //namespace: 'App.Events.MessageChat'
   });
+ //window.Echo = new Echo({ broadcaster: 'socket.io', host: 'http://localhost:8000', auth: { headers: { 'Authorization': 'Bearer ' + window.Laravel.csrfToken } } });
 /**fin**/
 
 // vue auth
@@ -85,9 +88,6 @@ Vue.use(VueAuth, {
 // init
 var component = require('./views/App.vue');
 component.router = Vue.router;
-
-
-
 
 new Vue(component).$mount('#app');
 
