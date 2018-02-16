@@ -1,100 +1,17 @@
 <template>
 	
 	<div>
-		
 		<div class="box-chat" >
 			<div class="chat-body" v-chat-scroll >
-				<!--<section class="module">
-          <ol class="discussion">
-            <li class="other">
-              <div class="avatar">
-                <img src="https://qph.ec.quoracdn.net/main-qimg-76b1a9a47d43e3792bd1ae5a9b2394d8" />
-              </div>
-              <div class="messages">
-                <p>yeah, they do early flights cause they connect with big airports.  they wanna get u to your connection
-        			
-                </p>
-                <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
-              </div>
-            </li>
-            <li class="self">
-              <div class="avatar">
-                <img src="http://sm.ign.com/ign_es/screenshot/default/goku-0_19cy.jpg" />
-              </div>
-              <div class="messages">
-                <p>That makes sense.</p>
-                <p>It's a pretty small airport.</p>
-                <time datetime="2009-11-13T20:14">37 mins</time>
-              </div>
-            </li>
-            <li class="other">
-              <div class="avatar">
-                <img src="https://qph.ec.quoracdn.net/main-qimg-76b1a9a47d43e3792bd1ae5a9b2394d8" />
-              </div>
-              <div class="messages">
-                <p>that mongodb thing looks good, huh?</p>
-                <p>
-                  tiny master db, and huge document store</p>
-              </div>
-            </li>
-            <li class="self">
-              <div class="avatar">
-                <img src="http://sm.ign.com/ign_es/screenshot/default/goku-0_19cy.jpg" />
-              </div>
-              <div class="messages">
-                <p>That makes sense.</p>
-                <p>It's a pretty small airport.</p>
-                <time datetime="2009-11-13T20:14">37 mins</time>
-              </div>
-            </li>
-            <li class="other">
-              <div class="avatar">
-                <img src="https://qph.ec.quoracdn.net/main-qimg-76b1a9a47d43e3792bd1ae5a9b2394d8" />
-              </div>
-              <div class="messages">
-                <p>that mongodb thing looks good, huh?</p>
-                <p>
-                  tiny master db, and huge document store</p>
-              </div>
-            </li>
-            <li class="self">
-              <div class="avatar">
-                <img src="http://sm.ign.com/ign_es/screenshot/default/goku-0_19cy.jpg" />
-              </div>
-              <div class="messages">
-                <p>That makes sense.</p>
-                <p>It's a pretty small airport.</p>
-                <time datetime="2009-11-13T20:14">37 mins</time>
-              </div>
-            </li>
-            <li class="other">
-              <div class="avatar">
-                <img src="https://qph.ec.quoracdn.net/main-qimg-76b1a9a47d43e3792bd1ae5a9b2394d8" />
-              </div>
-              <div class="messages">
-                <p>that mongodb thing looks good, huh?</p>
-                <p>
-                  tiny master db, and huge document store</p>
-              </div>
-            </li>
-          </ol>
-          
-        </section>-->
-
          <chat-messages :messages="messages"></chat-messages >
          <hr>
 			</div>
     
      <div class="chat-foot">           
-         <chat-form v-on:messagesent="addMessage" :user="nameAuth"></chat-form>
+         <chat-form v-on:messagesent="addMessage" :user="nameAuth" :load="btn_load"></chat-form>
       </div>
-
-				
-	
 		</div>
-
 	</div>
-
 </template>
 
 <script type="text/javascript">
@@ -104,33 +21,32 @@
    
     data(){
       return{
+          btn_load: false,
           nameAuth: '',
           messages:[],
+          id_projecto: this.$route.params.id,
           newMessage: '',
       }
     },
     created(){
       this.getNameUser();
       this.fetchMessages();
-
-      Echo.private('chat').listen('MessageSent', (e) => {
-
-         // alert("a llegado alerta de chat");
-         var audio = new Audio('http://soundbible.com/mp3/Elevator Ding-SoundBible.com-685385892.mp3');
-        audio.play();
-          this.messages.push({
-            message: e.message.message,
-            user: e.user
-          });
-        });
      
     },
     methods:{
        getNameUser() {
                 getUserAuth().then((response) =>{
-                        console.log(response);
-                        this.nameAuth = response.data;
-                        this.loading = false;
+                      this.nameAuth = response.data;
+                      this.loading = false;
+                      Echo.private('chatProyecto.'+this.nameAuth.id).listen('MessageProyecto', (e) => {
+                      this.fetchMessages();
+                      var audio = new Audio('http://soundbible.com/mp3/Elevator Ding-SoundBible.com-685385892.mp3');
+                      audio.play();
+                        /*this.messages.push({
+                          message: e.message.message,
+                          user: e.user
+                        });*/
+                      });
                 }).catch((error) =>{
                         console.log("error");
                 });
@@ -144,20 +60,25 @@
                 this.newMessage = ''
         },
         fetchMessages() {
-            axios.get('frontend/messages').then(response => {
+            axios.get('frontend/messages/'+this.id_projecto).then(response => {
                 this.messages = response.data;
                 console.log(response.data);
             });
         },
 
         addMessage(message) {
-            this.messages.push(message);
+            //this.messages.push(message);
+            this.btn_load = true;
+            var datos={}
+            datos.message = message;
+            datos.id_proyecto = this.id_projecto;
 
-            axios.post('frontend/messages', message).then(response => {
-              console.log(response.data);
+            axios.post('frontend/messages', datos).then(response => {
+              this.btn_load = false;
+              this.fetchMessages();
             });
         }
-    }
+    },
   }
 
 </script>

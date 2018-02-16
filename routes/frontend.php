@@ -16,9 +16,14 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::delete('users/{user}', 'UsersController@destroy');
     Route::get('getUserAuth', 'UsersController@getUserAuth');
 
-    Route::get('messages', 'chatController@fetchMessages');
+    Route::get('messages/{id_proyeto}', 'chatController@fetchMessages');
 	Route::post('messages', 'chatController@sendMessage');
 	Route::resource('proyecto', 'proyectoController');
+    Route::post('updateFotoProject', 'proyectoController@updateFoto');
+    Route::post('updateNameProject', 'proyectoController@updateName');
+    Route::get('select_user','UsersController@select_user');
+    Route::resource('permiso', 'permisoCOntroller');
+    Route::resource('colaborador','ColaboradorController');
 
 });
 

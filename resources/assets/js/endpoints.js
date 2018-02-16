@@ -20,5 +20,8 @@ export const submitProyecto = params => { return axios.post(`${base}/proyecto`, 
 
 export const listarproyecto = params => { return axios.get(`${base}/proyecto`);};
 export const getProyecto = params => {return axios.get(`${base}/proyecto/${params}`, {params: params})};
+export const select_user = params => {return axios.get(`${base}/select_user`);};
+export const getPermisos = params => {return axios.get(`${base}/permiso`);};
+//export const submitConfig = params => {return axios.get(`${base}/proyecto/$/edit`, params)};
 
 //export const auth = params => { return axios.get(`${base}/getUser`, params) };

@@ -18,7 +18,7 @@ class BroadcastServiceProvider extends ServiceProvider
         Broadcast::routes();
 
 
-        Broadcast::channel('App.User.{id}', function ($user, $id) {
+        /*Broadcast::channel('App.User.{id}', function ($user, $id) {
            
             return true;
 
@@ -27,7 +27,8 @@ class BroadcastServiceProvider extends ServiceProvider
         Broadcast::channel('chat', function ($user) {
       
             return true;
-        });
-        //require base_path('routes/channels.php');
+        });*/
+        
+        require base_path('routes/channels.php');
     }
 }

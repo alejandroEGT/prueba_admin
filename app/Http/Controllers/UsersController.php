@@ -65,6 +65,20 @@ class UsersController extends Controller
     }
     public function getUserAuth(){
 
-        return response()->json(Auth::user());
+        return Auth::user();
+    }
+    public function select_user(){
+
+       /* $array= [];
+        $users = User::all();
+
+        for ($i=0; $i < count($users); $i++) { 
+            $array[$i] = "'value': ".$users[$i]->name;
+        }
+        */
+       /* foreach ($users as $u) {
+            $array = $u->name;
+        }*/
+        return User::all();
     }
 }

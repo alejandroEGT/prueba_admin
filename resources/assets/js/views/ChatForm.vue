@@ -5,7 +5,7 @@
                 <el-input placeholder="Escribir mensaje" name="message" v-model="newMessage" @keyup.enter="sendMessage"></el-input>
             </el-col>
             <el-col :span="5" >
-                <el-button @click="sendMessage">
+                <el-button @click="sendMessage" v-loading="load">
                 Enviar
             </el-button>
             </el-col>
@@ -19,7 +19,7 @@
 
 <script>
     export default {
-        props: ['user'],
+        props: ['user', 'load'],
 
         data() {
             return {

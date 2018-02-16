@@ -11,7 +11,7 @@ class ProyectoController extends Controller
     public function index()
     {
 
-    	$listar = Proyecto::where('id_user', Auth::user()->id)->get();
+    	$listar = Proyecto::all();
     	return $listar;
 
     } 
@@ -29,6 +29,42 @@ class ProyectoController extends Controller
 	public function show($id){
 
 			return Proyecto::find($id);
+	}
+
+	public function updateFoto(Request $datos){
+
+
+		$datos->validate([
+	        'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+	    ]);
+
+		$project = Proyecto::find($datos->id_projecto);
+
+		$image = $datos->file('foto');
+		$name = time().'.'.$image->getClientOriginalExtension();
+		if($datos->file('foto')->move(public_path('avatar'), $name)){
+			$project->foto = 'avatar/'.$name;
+			if ($project->save()) {
+				return "Foto actualizada";
+			}
+		}
+		return "error";
+	}
+
+	public function updateName(request $dato){
+
+		$dato->validate([
+	        'nombre' => 'required',
+	    ]);
+
+	    $project = Proyecto::find($dato->id_projecto);
+	    $project->nombre = $dato->nombre;
+	    if ($project->save()) {
+	    	return "Nombre actualizado";
+	    }
+	    return "error";
+
+
 	}
 
 }

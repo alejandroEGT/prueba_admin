@@ -16,6 +16,9 @@ import Wiki from './views/Wiki.vue'
 import Notificaciones from './views/Notificaciones.vue'
 import Persona from './views/personas/persona.vue'
 import Chat from './views/personas/chat.vue'
+import conf_project from './views/config/config_project.vue'
+import Perfil from './views/config/Perfil.vue'
+import Colaboradores from './views/config/Colaboradores.vue'
 
 let routes = [
    
@@ -105,6 +108,22 @@ let routes = [
                       name: 'chat-people',
                       component: Chat
                   }
+                ]
+            },
+            {
+              path: '/config/:id/', component:conf_project, name :'Conf', redirect:{name:'perfil'} ,
+                children:[
+                  {
+                    path: 'perfil',
+                    name: 'perfil',
+                    component: Perfil
+                  },
+                  {
+                    path: 'colaboradores',
+                    name: 'colaboradores',
+                    component: Colaboradores
+                  },
+
                 ]
             }
         ]

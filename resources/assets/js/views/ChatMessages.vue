@@ -1,13 +1,9 @@
 <template  >
 
     <el-row v-loading="loading">
-           
-
-
-
         <el-col >
             <div v-for="message in messages">
-              <div v-if="nameAuth.id == message.user.id " >
+              <div v-if="nameAuth.id == message.id_user " >
                 <ol class="discussion">
                   <li class="self">
                     <div class="avatar">
@@ -17,14 +13,14 @@
                      
                     </div>
                     <div class="messages" >
-                      <p>{{ message.user.name }}</p>
+                      <p>{{ message.name}}</p>
                       <p>{{ message.message }}</p>
                       <time datetime="2009-11-13T20:14">37 mins</time>
                     </div>
                   </li>
                   </ol>
               </div>
-              <div v-if="nameAuth.id != message.user.id" >
+              <div v-if="nameAuth.id != message.id_user" >
                  <ol class="discussion">
                   <li class="other">
                     <div class="avatar">
@@ -34,7 +30,7 @@
                      
                     </div>
                     <div class="messages" >
-                      <p>{{ message.user.name }}</p>
+                      <p>{{ message.name }}</p>
                       <p>{{ message.message }}</p>
                       <time datetime="2009-11-13T20:14">37 mins</time>
                     </div>

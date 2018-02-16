@@ -9,6 +9,10 @@
     <el-col :span="10">
         <label>{{ proyecto.nombre }}</label>
     </el-col>
+    <el-col :offset="9" :span="2">
+      <el-button icon="fas fa-cog" @click="redirect($route.params.id)" v-model="btn_conf" >{{ btn_conf }}</el-button>
+
+    </el-col>
   </el-row>
 
   <!--<el-tabs v-model="activeName" @tab-click="change">
@@ -67,6 +71,7 @@
 export default {
     data() {
       return {
+        btn_conf:'configuración',
         proyecto:{},
       };
     },
@@ -88,6 +93,10 @@ export default {
 
           });
       },
+      redirect(id){
+        //alert(id);
+        this.$router.push({ path: '/config/'+id })
+      }
     
     }
   };

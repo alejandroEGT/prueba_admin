@@ -22,3 +22,8 @@ Broadcast::channel('chat', function ($user) {
 	return true;
 });
 
+ Broadcast::channel('chatProyecto.{id}', function ($id) {
+
+        return true;
+ });
+

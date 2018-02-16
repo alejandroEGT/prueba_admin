@@ -88,7 +88,7 @@
                                         border-bottom: 1px solid #E5E7E9 ;">
                                         <el-tab-pane label="Todos" name="first">
                                             
-                                            <div  style="margin-left:5px ;overflow:scroll;height:100px;">
+                                            <div v-loading="load_project"  style="margin-left:5px ;overflow:scroll;height:100px;">
                                                 <li v-for="list in list_proyecto">
                                                     <!--<router-link :to="{ name: 'Proyecto', params:{ id: list.id}  }" append>-->
                                                     <a :href="'/#/panel/proyecto/' + list.id +'/'" >
@@ -231,12 +231,12 @@
             <section class="content-container">
                 <div class="grid-content bg-purple-light">
                     <el-col :span="24" class="breadcrumb-container">
-                        <!--<strong class="title">{{$route.path}}</strong>-->
-                        <el-breadcrumb separator="/" class="breadcrumb-inner">
+                        <!--<strong class="title">{{$route.path}}</strong> ///rutas tipo mapa  -->
+                        <!--<el-breadcrumb separator="/" class="breadcrumb-inner">
                             <el-breadcrumb-item v-for="item in $route.matched" :key="item.id">
                                 {{ item.name }}
                             </el-breadcrumb-item>
-                        </el-breadcrumb>
+                        </el-breadcrumb>-->
                     </el-col>
                     <el-col :span="24" class="content-wrapper">
                         <transition name="fade" mode="out-in">
@@ -272,6 +272,7 @@
         data() {
             return {
                 loading: true,
+                load_project:true,
                 sysName:'Estake',
                 activeName: 'first',
                 activeName2: 'first',
@@ -318,6 +319,7 @@
                listarproyecto().then((response)=>{
                   this.list_proyecto = response.data;
                   console.log(response.data);
+                  this.load_project=false;
                }).catch((error)=>{
                   this.list_proyecto = "nada para listar";
                   console.log("sin datos");
